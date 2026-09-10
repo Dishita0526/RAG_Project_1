@@ -1,18 +1,38 @@
 import pydantic
 
+
 class RAGChunkAndSrc(pydantic.BaseModel):
-    """A Chunk and its original source filename"""
-    chunk :list[str]
-    source_id: str = None
+    """
+    Chunks extracted from a document
+    and the original source.
+    """
+
+    chunks: list[str]
+    source_id: str | None = None
+
 
 class RAGUpsertResult(pydantic.BaseModel):
-    inngested:int 
-    
+    """
+    Result of inserting chunks into Qdrant.
+    """
+
+    ingested: int
+
+
 class RAGSearchResult(pydantic.BaseModel):
+    """
+    Search results returned from Qdrant.
+    """
+
     contexts: list[str]
     sources: list[str]
 
+
 class RAGQueryResult(pydantic.BaseModel):
-    ans: str
-    contexts : list[str]
-    num_contexts : int 
+    """
+    Final answer returned by the RAG pipeline.
+    """
+
+    answer: str
+    sources: list[str]
+    num_contexts: int
